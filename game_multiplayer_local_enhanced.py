@@ -3,7 +3,6 @@ import time
 import pandas as pd
 from rapidfuzz import fuzz
 import streamlit as st
-import random
 
 # try import autorefresh; fallback gracefully if not installed
 try:
@@ -61,78 +60,6 @@ st.markdown("""
     /* Fix white container backgrounds */
     .element-container, .stBlock, .block-container {
         background: transparent !important;
-    }
-    
-    /* Welcome Screen Styles */
-    .welcome-screen {
-        background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 100%);
-        backdrop-filter: blur(20px);
-        border: 2px solid rgba(255,255,255,0.3);
-        border-radius: 30px;
-        padding: 4rem 3rem;
-        margin: 3rem auto;
-        text-align: center;
-        max-width: 800px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-        animation: welcomeFloat 4s ease-in-out infinite alternate;
-    }
-    
-    @keyframes welcomeFloat {
-        0% { transform: translateY(0px) scale(1); }
-        100% { transform: translateY(-10px) scale(1.02); }
-    }
-    
-    .welcome-title {
-        font-size: 4rem;
-        font-weight: 900;
-        background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #ffd700 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 2rem;
-        animation: titleShimmer 3s ease-in-out infinite;
-    }
-    
-    @keyframes titleShimmer {
-        0%, 100% { filter: drop-shadow(0 0 20px rgba(255,107,107,0.5)); }
-        50% { filter: drop-shadow(0 0 40px rgba(78,205,196,0.8)); }
-    }
-    
-    .mode-button {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        border-radius: 25px;
-        padding: 1.5rem 3rem;
-        margin: 1rem;
-        font-size: 1.3rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 8px 30px rgba(102,126,234,0.4);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .mode-button:hover {
-        transform: translateY(-5px) scale(1.05);
-        box-shadow: 0 15px 50px rgba(102,126,234,0.7);
-        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-    }
-    
-    .mode-button:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: left 0.5s ease;
-    }
-    
-    .mode-button:hover:before {
-        left: 100%;
     }
     
     /* Custom Card Styles */
@@ -270,63 +197,24 @@ st.markdown("""
         transform: translateY(-1px) !important;
     }
     
-    /* Success Animation */
-    .success-explosion {
-        animation: successExplosion 2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* Specific button styles for different actions */
+    div[data-testid="stButton"]:nth-of-type(1) button {
+        background: linear-gradient(135deg, #00b894 0%, #00a085 100%) !important;
     }
     
-    @keyframes successExplosion {
-        0% { 
-            transform: scale(1) rotate(0deg);
-            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
-        }
-        15% { 
-            transform: scale(1.2) rotate(-5deg);
-            background: linear-gradient(135deg, #ffd700 0%, #ff6b6b 100%);
-        }
-        30% { 
-            transform: scale(1.4) rotate(5deg);
-            background: linear-gradient(135deg, #4ecdc4 0%, #667eea 100%);
-        }
-        45% { 
-            transform: scale(1.3) rotate(-3deg);
-            background: linear-gradient(135deg, #ff6b6b 0%, #ffd700 100%);
-        }
-        60% { 
-            transform: scale(1.5) rotate(3deg);
-            background: linear-gradient(135deg, #00b894 0%, #4ecdc4 100%);
-        }
-        75% { 
-            transform: scale(1.2) rotate(-1deg);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        100% { 
-            transform: scale(1) rotate(0deg);
-            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
-        }
+    div[data-testid="stButton"]:nth-of-type(2) button {
+        background: linear-gradient(135deg, #e17055 0%, #d63031 100%) !important;
     }
     
-    /* Countdown Animation */
-    .countdown-timer {
-        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-        color: white;
-        padding: 2rem;
-        border-radius: 20px;
-        text-align: center;
-        margin: 1rem 0;
-        box-shadow: 0 10px 30px rgba(255,107,107,0.5);
-        animation: countdownPulse 1s ease-in-out infinite;
-    }
-    
-    @keyframes countdownPulse {
-        0%, 100% { 
-            transform: scale(1);
-            box-shadow: 0 10px 30px rgba(255,107,107,0.5);
-        }
-        50% { 
-            transform: scale(1.05);
-            box-shadow: 0 15px 50px rgba(255,107,107,0.8);
-        }
+    /* Power-up buttons with equal sizing */
+    .power-up-button {
+        height: 80px !important;
+        min-height: 80px !important;
+        font-size: 13px !important;
+        line-height: 1.2 !important;
+        padding: 0.8rem !important;
+        white-space: normal !important;
+        text-align: center !important;
     }
     
     /* Input Field Enhancements - BLACK TEXT */
@@ -481,32 +369,190 @@ st.markdown("""
         box-shadow: 0 15px 40px rgba(0,0,0,0.3);
     }
     
-    /* Hint Card Styles */
-    .hint-card {
-        background: linear-gradient(135deg, rgba(255,215,0,0.15) 0%, rgba(255,215,0,0.08) 100%);
-        backdrop-filter: blur(12px);
-        border: 2px solid rgba(255,215,0,0.3);
-        border-radius: 18px;
-        padding: 1.5rem;
-        margin: 1rem 0;
-        text-align: center;
-        animation: hintGlow 2s ease-in-out infinite alternate;
+    .movie-hint:before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #ff6b6b);
+        border-radius: 20px;
+        z-index: -1;
+        animation: borderRotate 4s linear infinite;
+        opacity: 0;
+        transition: opacity 0.3s ease;
     }
     
-    @keyframes hintGlow {
-        0% { 
-            box-shadow: 0 5px 20px rgba(255,215,0,0.3);
-            border-color: rgba(255,215,0,0.3);
+    .movie-hint:hover:before {
+        opacity: 0.8;
+    }
+    
+    @keyframes borderRotate {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    /* Progress Indicators */
+    .streak-indicator {
+        background: linear-gradient(90deg, #ff6b6b, #ffd700, #4ecdc4, #ff6b6b);
+        background-size: 300% 300%;
+        height: 8px;
+        border-radius: 4px;
+        margin: 1rem 0;
+        animation: gradientShift 3s ease-in-out infinite;
+    }
+    
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    /* Title Enhancement */
+    .main-title {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ff6b6b 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 3.5rem;
+        font-weight: 900;
+        text-align: center;
+        margin: 2rem 0;
+        animation: titlePulse 4s ease-in-out infinite;
+        position: relative;
+        text-shadow: none;
+    }
+    
+    @keyframes titlePulse {
+        0%, 100% { 
+            filter: drop-shadow(0 0 10px rgba(102,126,234,0.4));
+            transform: scale(1);
         }
-        100% { 
-            box-shadow: 0 10px 40px rgba(255,215,0,0.6);
-            border-color: rgba(255,215,0,0.6);
+        50% { 
+            filter: drop-shadow(0 0 30px rgba(118,75,162,0.8));
+            transform: scale(1.02);
         }
+    }
+    
+    /* Enhanced Expander Styling */
+    .streamlit-expander {
+        background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 15px;
+        margin: 1rem 0;
+    }
+    
+    .streamlit-expander > div:first-child {
+        background: transparent !important;
+        color: #ffffff !important;
+        border-radius: 15px !important;
+        padding: 1rem !important;
+    }
+    
+    .streamlit-expander > div:first-child:hover {
+        background: rgba(255,255,255,0.1) !important;
+    }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: rgba(255,255,255,0.1);
+        border-radius: 5px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(102,126,234,0.3);
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        box-shadow: 0 4px 20px rgba(102,126,234,0.5);
+    }
+    
+    /* Floating Animation for Game Elements */
+    .floating {
+        animation: floating 4s ease-in-out infinite;
+    }
+    
+    @keyframes floating {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        25% { transform: translateY(-8px) rotate(1deg); }
+        50% { transform: translateY(-15px) rotate(0deg); }
+        75% { transform: translateY(-8px) rotate(-1deg); }
+    }
+    
+    /* Celebration Effects */
+    .celebration {
+        animation: celebrate 2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    @keyframes celebrate {
+        0% { transform: scale(1) rotate(0deg); }
+        15% { transform: scale(1.1) rotate(-5deg); }
+        30% { transform: scale(1.2) rotate(5deg); }
+        45% { transform: scale(1.15) rotate(-3deg); }
+        60% { transform: scale(1.25) rotate(3deg); }
+        75% { transform: scale(1.1) rotate(-1deg); }
+        100% { transform: scale(1) rotate(0deg); }
+    }
+    
+    /* Additional UI Enhancements */
+    .metric-card {
+        background: linear-gradient(135deg, rgba(78,205,196,0.2) 0%, rgba(78,205,196,0.1) 100%);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(78,205,196,0.3);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 0.5rem 0;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    
+    .metric-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(78,205,196,0.2);
+        border-color: rgba(78,205,196,0.5);
+    }
+    
+    /* Form styling */
+    .stForm {
+        background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 20px;
+        padding: 2rem;
+        margin: 1rem 0;
+    }
+    
+    .stForm:hover {
+        border-color: rgba(255,215,0,0.4);
+        background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 100%);
+    }
+    
+    /* Ensure all text remains visible */
+    .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4, .stMarkdown h5, .stMarkdown h6 {
+        color: #ffffff !important;
+    }
+    
+    .stMarkdown p, .stMarkdown span, .stMarkdown div {
+        color: #ffffff !important;
+    }
+    
+    /* Fix any remaining white backgrounds */
+    .stContainer, .main .block-container {
+        background: transparent !important;
     }
     
     /* Enhanced mobile responsiveness */
     @media (max-width: 768px) {
-        .welcome-title {
+        .main-title {
             font-size: 2.5rem;
         }
         
@@ -522,6 +568,74 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
+# =========================
+# Enhanced JavaScript for Custom Animations
+# =========================
+def show_success_animation():
+    st.markdown("""
+    <script>
+    // Enhanced success animation with more particles
+    function createFireworks() {
+        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#667eea', '#764ba2'];
+        const particles = 30; // Increased particle count
+        
+        for(let i = 0; i < particles; i++) {
+            const firework = document.createElement('div');
+            const size = Math.random() * 6 + 3;
+            firework.style.position = 'fixed';
+            firework.style.left = Math.random() * window.innerWidth + 'px';
+            firework.style.top = Math.random() * window.innerHeight + 'px';
+            firework.style.width = size + 'px';
+            firework.style.height = size + 'px';
+            firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            firework.style.borderRadius = '50%';
+            firework.style.pointerEvents = 'none';
+            firework.style.zIndex = '9999';
+            firework.style.animation = `firework ${2 + Math.random()}s ease-out forwards`;
+            firework.style.boxShadow = `0 0 20px ${colors[Math.floor(Math.random() * colors.length)]}`;
+            document.body.appendChild(firework);
+            
+            setTimeout(() => {
+                firework.remove();
+            }, 3000);
+        }
+    }
+    
+    // Add enhanced firework animation CSS
+    if (!document.querySelector('#firework-style')) {
+        const style = document.createElement('style');
+        style.id = 'firework-style';
+        style.textContent = `
+            @keyframes firework {
+                0% { 
+                    transform: scale(0) rotate(0deg) translateY(0px); 
+                    opacity: 1; 
+                }
+                25% { 
+                    transform: scale(1.2) rotate(90deg) translateY(-50px); 
+                    opacity: 0.9; 
+                }
+                50% { 
+                    transform: scale(1.8) rotate(180deg) translateY(-100px); 
+                    opacity: 0.7; 
+                }
+                75% { 
+                    transform: scale(1.5) rotate(270deg) translateY(-150px); 
+                    opacity: 0.4; 
+                }
+                100% { 
+                    transform: scale(0.2) rotate(360deg) translateY(-200px); 
+                    opacity: 0; 
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    createFireworks();
+    </script>
+    """, unsafe_allow_html=True)
 
 # =========================
 # Setup & Data
@@ -558,36 +672,11 @@ def match_name(user_guess, actual_name):
             return True
     return fuzz.ratio(user_guess, actual_name) > 80
 
-def get_movie_hint(row):
-    """Generate contextual hints for the movie"""
-    hints = [
-        f"This movie was released around the {row.get('year', 'unknown')}s",
-        f"It's a {row.get('genre', 'Bollywood')} film",
-        f"The story is about love and drama typical of Bollywood cinema",
-        f"This movie features popular songs and dance sequences",
-        f"It was a box office hit with memorable performances"
-    ]
-    
-    # Add specific hints based on actors
-    if not pd.isna(row['lead_male_actor']):
-        actor = str(row['lead_male_actor']).split()[0]
-        hints.append(f"The male lead is known for his versatile acting skills")
-        hints.append(f"This actor has been in many successful Bollywood films")
-    
-    if not pd.isna(row['lead_female_actor']):
-        actress = str(row['lead_female_actor']).split()[0]
-        hints.append(f"The female lead is a renowned Bollywood actress")
-        hints.append(f"She has won several awards for her performances")
-    
-    return random.choice(hints)
-
 # =========================
-# Session State Management
+# Session State (multiplayer local)
 # =========================
 def init_state():
     ss = st.session_state
-    if "game_mode" not in ss:
-        ss.game_mode = None
     if "players" not in ss:
         ss.players = {}
     if "current_player" not in ss:
@@ -595,7 +684,7 @@ def init_state():
     if "used_movies" not in ss:
         ss.used_movies = set()
     if "current_row" not in ss:
-        ss.current_row = None
+        pick_new_movie()
     if "messages" not in ss:
         ss.messages = []
     if "revealed" not in ss:
@@ -606,10 +695,6 @@ def init_state():
         ss.advance_time = 0.0
     if "show_celebration" not in ss:
         ss.show_celebration = False
-    if "hint_used" not in ss:
-        ss.hint_used = False
-    if "current_hint" not in ss:
-        ss.current_hint = ""
 
 def add_player(name):
     ss = st.session_state
@@ -640,237 +725,61 @@ def pick_new_movie():
     ss.revealed = {"movie": False, "actor": False, "actress": False, "song": False}
     ss.messages = []
     ss.show_celebration = False
-    ss.hint_used = False
-    ss.current_hint = ""
-    ss.auto_advance = False
-    ss.advance_time = 0.0
 
 def push_message(kind, text):
     st.session_state.messages.append((kind, text, time.time()))
 
-def prune_messages(seconds=8):
+def prune_messages(seconds=10):
     now = time.time()
     st.session_state.messages = [(k,t,ts) for (k,t,ts) in st.session_state.messages if now - ts < seconds]
 
-def show_success_animation():
-    st.markdown("""
-    <script>
-    // Enhanced success animation with fireworks
-    function createCelebrationFireworks() {
-        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#667eea', '#764ba2', '#ffd700'];
-        const particles = 50;
-        
-        for(let i = 0; i < particles; i++) {
-            const firework = document.createElement('div');
-            const size = Math.random() * 8 + 4;
-            firework.style.position = 'fixed';
-            firework.style.left = Math.random() * window.innerWidth + 'px';
-            firework.style.top = Math.random() * window.innerHeight + 'px';
-            firework.style.width = size + 'px';
-            firework.style.height = size + 'px';
-            firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            firework.style.borderRadius = '50%';
-            firework.style.pointerEvents = 'none';
-            firework.style.zIndex = '9999';
-            firework.style.animation = `celebrationFirework ${2 + Math.random() * 2}s ease-out forwards`;
-            firework.style.boxShadow = `0 0 20px ${colors[Math.floor(Math.random() * colors.length)]}`;
-            document.body.appendChild(firework);
-            
-            setTimeout(() => {
-                firework.remove();
-            }, 4000);
-        }
-    }
-    
-    // Add enhanced firework animation CSS
-    if (!document.querySelector('#celebration-style')) {
-        const style = document.createElement('style');
-        style.id = 'celebration-style';
-        style.textContent = `
-            @keyframes celebrationFirework {
-                0% { 
-                    transform: scale(0) rotate(0deg) translateY(0px); 
-                    opacity: 1; 
-                }
-                20% { 
-                    transform: scale(1.5) rotate(72deg) translateY(-100px); 
-                    opacity: 0.9; 
-                }
-                40% { 
-                    transform: scale(2.2) rotate(144deg) translateY(-200px); 
-                    opacity: 0.8; 
-                }
-                60% { 
-                    transform: scale(2.8) rotate(216deg) translateY(-300px); 
-                    opacity: 0.6; 
-                }
-                80% { 
-                    transform: scale(2.5) rotate(288deg) translateY(-400px); 
-                    opacity: 0.3; 
-                }
-                100% { 
-                    transform: scale(0.5) rotate(360deg) translateY(-500px); 
-                    opacity: 0; 
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    
-    createCelebrationFireworks();
-    
-    // Create screen flash effect
-    const flash = document.createElement('div');
-    flash.style.position = 'fixed';
-    flash.style.top = '0';
-    flash.style.left = '0';
-    flash.style.width = '100vw';
-    flash.style.height = '100vh';
-    flash.style.background = 'radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 70%)';
-    flash.style.pointerEvents = 'none';
-    flash.style.zIndex = '9998';
-    flash.style.animation = 'flashEffect 1s ease-out forwards';
-    document.body.appendChild(flash);
-    
-    setTimeout(() => {
-        flash.remove();
-    }, 1000);
-    
-    if (!document.querySelector('#flash-style')) {
-        const flashStyle = document.createElement('style');
-        flashStyle.id = 'flash-style';
-        flashStyle.textContent = `
-            @keyframes flashEffect {
-                0% { opacity: 0; }
-                20% { opacity: 1; }
-                100% { opacity: 0; }
-            }
-        `;
-        document.head.appendChild(flashStyle);
-    }
-    </script>
-    """, unsafe_allow_html=True)
+def finish_movie_and_advance(delay_sec=2):
+    time.sleep(delay_sec)
+    pick_new_movie()
+    st.rerun()
 
 init_state()
 
 # =========================
-# Welcome Screen
-# =========================
-if st.session_state.game_mode is None:
-    st.markdown("""
-    <div class="welcome-screen">
-        <h1 class="welcome-title">🎭 Bollywood Cinema Quest 🎬</h1>
-        <p style="font-size: 1.5rem; margin: 2rem 0; opacity: 0.9;">
-            Test your Bollywood knowledge in this exciting movie guessing game!
-        </p>
-        <p style="font-size: 1.2rem; margin: 2rem 0; opacity: 0.8;">
-            Choose your adventure mode:
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        if st.button("🎯 Single Player Mode", key="single_mode", use_container_width=True):
-            st.session_state.game_mode = "single"
-            add_player("Cinema Master")
-            st.session_state.current_player = "Cinema Master"
-            pick_new_movie()
-            st.rerun()
-    
-    with col2:
-        if st.button("👥 Multiplayer Mode", key="multi_mode", use_container_width=True):
-            st.session_state.game_mode = "multi"
-            st.rerun()
-    
-    st.markdown("""
-    <div style="text-align: center; margin-top: 3rem;">
-        <h3 style="color: #4ecdc4;">🌟 Game Features:</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 0;">
-            <div class="game-card">
-                <h4>🎬 Movie Mysteries</h4>
-                <p>Guess Bollywood movies from clever initial clues</p>
-            </div>
-            <div class="game-card">
-                <h4>💡 Smart Hints</h4>
-                <p>Get contextual hints without breaking your streak</p>
-            </div>
-            <div class="game-card">
-                <h4>🏆 Scoring System</h4>
-                <p>Earn points and milestone bonuses</p>
-            </div>
-            <div class="game-card">
-                <h4>🎪 Fun Animations</h4>
-                <p>Celebrate victories with spectacular effects</p>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    st.stop()
-
-# =========================
-# Game Interface
-# =========================
 # Enhanced Sidebar: players & controls
+# =========================
 with st.sidebar:
     st.markdown('<div class="floating">', unsafe_allow_html=True)
     st.markdown("# 👥 **Cinema Quest Players**")
     st.markdown('</div>', unsafe_allow_html=True)
     
-    if st.session_state.game_mode == "multi":
-        # Enhanced player addition with equal-sized buttons
-        st.markdown("### ✨ Add New Player")
-        new_player = st.text_input("🎭 Enter player name", value="", placeholder="Enter your cinema alias...")
-        
-        # Equal-sized buttons using columns
-        col1, col2 = st.columns(2)
-        with col1:
-            if st.button("✨ Join Game", use_container_width=True, key="join_btn"):
-                if new_player.strip():
-                    added = add_player(new_player.strip())
-                    if added:
-                        st.success(f"🎉 Welcome, {new_player.strip()}!")
-                        st.session_state.current_player = new_player.strip()
-                        if st.session_state.current_row is None:
-                            pick_new_movie()
-                        st.rerun()
-                    else:
-                        st.warning("🎭 This alias is already taken!")
+    # Enhanced player addition with equal-sized buttons
+    st.markdown("### ✨ Add New Player")
+    new_player = st.text_input("🎭 Enter player name", value="", placeholder="Enter your cinema alias...")
+    
+    # Equal-sized buttons using columns
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("✨ Join Game", use_container_width=True, key="join_btn"):
+            if new_player.strip():
+                added = add_player(new_player.strip())
+                if added:
+                    st.success(f"🎉 Welcome, {new_player.strip()}!")
+                    st.session_state.current_player = new_player.strip()
+                    st.rerun()
                 else:
-                    st.error("🚫 Please enter a valid name")
-        
-        with col2:
-            if st.button("🔄 Reset Game", use_container_width=True, key="reset_btn"):
-                for key in list(st.session_state.keys()):
-                    del st.session_state[key]
-                st.rerun()
+                    st.warning("🎭 This alias is already taken!")
+            else:
+                st.error("🚫 Please enter a valid name")
+    
+    with col2:
+        if st.button("🔄 Reset Game", use_container_width=True, key="reset_btn"):
+            for key in list(st.session_state.keys()):
+                del st.session_state[key]
+            st.rerun()
 
-        # Enhanced player selection
-        if st.session_state.players:
-            st.markdown("### 🎬 Current Player")
-            player_list = list(st.session_state.players.keys())
-            default_idx = player_list.index(st.session_state.current_player) if st.session_state.current_player in player_list else 0
-            chosen = st.selectbox("🎯 Who's turn to guess?", player_list, index=default_idx, key="player_select")
-            st.session_state.current_player = chosen
-    else:
-        # Single player mode
-        col1, col2 = st.columns(2)
-        with col1:
-            if st.button("🏠 Main Menu", use_container_width=True, key="main_menu_btn"):
-                for key in list(st.session_state.keys()):
-                    del st.session_state[key]
-                st.rerun()
-        with col2:
-            if st.button("🔄 New Game", use_container_width=True, key="new_game_btn"):
-                st.session_state.used_movies = set()
-                st.session_state.players["Cinema Master"] = {
-                    "score": 0, "streak": 0, "milestones": set(),
-                    "guessed_movies": [], "history": [],
-                    "streak_has_hint": False, "streak_has_wrong": False
-                }
-                pick_new_movie()
-                st.rerun()
+    # Enhanced player selection
+    if st.session_state.players:
+        st.markdown("### 🎬 Current Player")
+        player_list = list(st.session_state.players.keys())
+        default_idx = player_list.index(st.session_state.current_player) if st.session_state.current_player in player_list else 0
+        chosen = st.selectbox("🎯 Who's turn to guess?", player_list, index=default_idx, key="player_select")
+        st.session_state.current_player = chosen
 
     st.markdown("---")
     
@@ -895,11 +804,8 @@ with st.sidebar:
         st.info("🎭 No players yet — join the cinema quest!")
 
 # =========================
-# Main Game Layout
+# Main Layout Enhancement
 # =========================
-if st.session_state.current_row is None:
-    pick_new_movie()
-
 left, right = st.columns([2.2, 1.3])
 
 with left:
@@ -915,17 +821,17 @@ with left:
         • **🎬 Guess the Movie** correctly = **+2 points** + streak bonus!<br>
         • **🎭 Bonus Milestones**: Every 5 correct movies = massive bonus!<br>
         &nbsp;&nbsp;→ 5 movies: +10-15 bonus | 10 movies: +20 bonus | 15+: Even more!<br>
-        • **💡 Hints available**: Get movie clues without breaking streak!<br>
+        • **💡 Hints available**: Actor, Actress, Song reveals (affects bonus)<br>
         • **⚡ Streak System**: Wrong guess = streak reset, but score stays!<br>
         • **🎪 Multiplayer**: Add friends and compete for cinema supremacy!<br>
         
-        <small>💫 <em>Pro tip: Use hints strategically and trust your Bollywood knowledge!</em></small>
+        <small>💫 <em>Pro tip: Use initials wisely and trust your Bollywood knowledge!</em></small>
         </div>
         """, unsafe_allow_html=True)
 
     # Current player display
     cp = st.session_state.current_player
-    if cp and cp in st.session_state.players:
+    if cp:
         pdata = st.session_state.players[cp]
         st.markdown(f"""
         <div class="player-card current-player">
@@ -937,7 +843,7 @@ with left:
             <div class="streak-indicator"></div>
         </div>
         """, unsafe_allow_html=True)
-    elif st.session_state.game_mode == "multi":
+    else:
         st.markdown("""
         <div class="game-card">
             <h3>🎭 Ready to Start Your Cinema Quest?</h3>
@@ -951,7 +857,7 @@ with left:
         <div class="game-card celebration">
             <h2>🎉 Congratulations! Quest Complete! 🎊</h2>
             <p>You've mastered all movies in our Bollywood database!</p>
-            <p><em>Click "New Game" in the sidebar to start fresh...</em></p>
+            <p><em>Refresh the page to start a new cinema quest...</em></p>
         </div>
         """, unsafe_allow_html=True)
         st.stop()
@@ -996,15 +902,6 @@ with left:
         </div>
         """, unsafe_allow_html=True)
 
-    # Movie Hint Section
-    if st.session_state.hint_used and st.session_state.current_hint:
-        st.markdown(f"""
-        <div class="hint-card">
-            <h4>💡 Movie Hint</h4>
-            <p style="font-size: 1.1rem; margin: 0;">{st.session_state.current_hint}</p>
-        </div>
-        """, unsafe_allow_html=True)
-
     # Enhanced Guess Form
     st.markdown("### 💭 **Make Your Guess**")
     with st.form(key="guess_form", clear_on_submit=True):
@@ -1014,24 +911,10 @@ with left:
             placeholder="Type movie name, actor, actress, or song...",
             key="guess_input"
         )
-        
-        col1, col2 = st.columns([3, 1])
-        with col1:
-            submitted = st.form_submit_button("🚀 **Submit Guess**", use_container_width=True)
-        with col2:
-            hint_clicked = st.form_submit_button("💡 **Hint**", use_container_width=True)
-        
-        if hint_clicked:
-            if not cp or cp not in st.session_state.players:
-                st.error("🚫 Please select a player first in the sidebar.")
-            else:
-                st.session_state.hint_used = True
-                st.session_state.current_hint = get_movie_hint(row)
-                push_message("info", f"💡 {cp} used a hint: {st.session_state.current_hint}")
-                st.rerun()
+        submitted = st.form_submit_button("🚀 **Submit Guess**", use_container_width=True)
         
         if submitted:
-            if not cp or cp not in st.session_state.players:
+            if not cp:
                 st.error("🚫 Please select a player first in the sidebar.")
             else:
                 guesses = [g.strip() for g in guess_input.split(",") if g.strip()]
@@ -1044,7 +927,7 @@ with left:
                             # Award points and update streak
                             player["score"] += 2
                             player["guessed_movies"].append(movie)
-                            player["history"].append(movie)
+                            player["history"].append(f"{time.strftime('%H:%M:%S')} - ✅ Correct movie: {movie} (+2)")
                             player["streak"] += 1
                             
                             if st.session_state.hints_used_current_movie or player["streak_has_hint"]:
@@ -1068,15 +951,13 @@ with left:
                                         if milestone == 5 and player["streak_has_hint"]:
                                             bonus = 5
                                         player["score"] += bonus
+                                        player["history"].append(f"{time.strftime('%H:%M:%S')} - 🎖️ Milestone: {milestone} (+{bonus})")
                                         push_message("success", f"🎊 {cp} reached {milestone} streak milestone! +{bonus} bonus points!")
                                     else:
                                         push_message("info", f"🎯 {cp} reached {milestone} streak but had wrong guesses — no bonus this time")
                                     player["milestones"].add(milestone)
 
-                            # Auto advance after 2 seconds
-                            st.session_state.auto_advance = True
-                            st.session_state.advance_time = time.time() + 2
-                            st.rerun()
+                            finish_movie_and_advance(delay_sec=2)
                             break
                         else:
                             push_message("info", f"🎭 {cp}, you already guessed this movie!")
@@ -1085,45 +966,40 @@ with left:
                     elif match_name(g, actor):
                         if not st.session_state.guessed.get("actor", False):
                             st.session_state.guessed["actor"] = True
+                            player["history"].append(f"{time.strftime('%H:%M:%S')} - ✅ Actor guessed ({g})")
                             push_message("success", f"🕺 {cp} got the actor right!")
                     elif match_name(g, actress):
                         if not st.session_state.guessed.get("actress", False):
                             st.session_state.guessed["actress"] = True
+                            player["history"].append(f"{time.strftime('%H:%M:%S')} - ✅ Actress guessed ({g})")
                             push_message("success", f"💃 {cp} got the actress right!")
                     elif match_name(g, song):
                         if not st.session_state.guessed.get("song", False):
                             st.session_state.guessed["song"] = True
+                            player["history"].append(f"{time.strftime('%H:%M:%S')} - ✅ Song guessed ({g})")
                             push_message("success", f"🎵 {cp} got the song right!")
                     else:
                         # Wrong guess
                         push_message("error", f"❌ {cp}, '{g}' isn't correct. Keep trying!")
+                        player["history"].append(f"{time.strftime('%H:%M:%S')} - ❌ Wrong guess: {g}")
                         player["streak_has_wrong"] = True
                         player["streak"] = 0
 
-    # Enhanced Auto-advance handling with better countdown
-    if st.session_state.get("auto_advance", False):
-        remaining = max(0, int(st.session_state.advance_time - time.time()))
-        if remaining > 0:
-            st.markdown(f"""
-            <div class="countdown-timer">
-                <h3>⏳ Next cinema challenge in <span style="font-size: 2.5rem; color: #ffd700;">{remaining}</span> seconds...</h3>
-                <div style="width: 100%; background: rgba(255,255,255,0.2); border-radius: 10px; margin-top: 1rem;">
-                    <div style="width: {(2-remaining)/2*100}%; background: linear-gradient(90deg, #ffd700, #ff6b6b); height: 8px; border-radius: 10px; transition: width 0.1s ease;"></div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-            if HAS_AUTOREFRESH:
-                st_autorefresh(interval=100, key="auto_refresh")
+    # Enhanced Messages Display
+    prune_messages(seconds=10)
+    for kind, text, _ in st.session_state.messages:
+        if kind == "success":
+            st.markdown(f'<div class="success-message">✨ {text}</div>', unsafe_allow_html=True)
+        elif kind == "error":
+            st.markdown(f'<div class="error-message">💥 {text}</div>', unsafe_allow_html=True)
         else:
-            st.session_state.auto_advance = False
-            pick_new_movie()
-            st.rerun()
+            st.info(text)
 
     st.markdown("---")
 
     # Enhanced Hints & Reveals Section with equal-sized buttons
     st.markdown("### 🧠 **Power-Ups & Reveals**")
-    st.markdown("*Use these wisely - some might affect your streak bonus!*")
+    st.markdown("*Use these wisely - they might affect your streak bonus!*")
     
     # First row of power-ups (3 buttons)
     col1, col2, col3 = st.columns(3)
@@ -1132,8 +1008,9 @@ with left:
             st.session_state.revealed["actor"] = True
             st.session_state.hints_used_current_movie = True
             push_message("info", f"🕺 Actor Revealed: **{actor}**")
-            if cp and cp in st.session_state.players:
+            if cp:
                 st.session_state.players[cp]["streak_has_hint"] = True
+                st.session_state.players[cp]["history"].append(f"{time.strftime('%H:%M:%S')} - 💡 Revealed actor")
             st.rerun()
 
     with col2:
@@ -1141,8 +1018,9 @@ with left:
             st.session_state.revealed["actress"] = True
             st.session_state.hints_used_current_movie = True
             push_message("info", f"💃 Actress Revealed: **{actress}**")
-            if cp and cp in st.session_state.players:
+            if cp:
                 st.session_state.players[cp]["streak_has_hint"] = True
+                st.session_state.players[cp]["history"].append(f"{time.strftime('%H:%M:%S')} - 💡 Revealed actress")
             st.rerun()
 
     with col3:
@@ -1150,8 +1028,9 @@ with left:
             st.session_state.revealed["song"] = True
             st.session_state.hints_used_current_movie = True
             push_message("info", f"🎵 Song Revealed: **{song}**")
-            if cp and cp in st.session_state.players:
+            if cp:
                 st.session_state.players[cp]["streak_has_hint"] = True
+                st.session_state.players[cp]["history"].append(f"{time.strftime('%H:%M:%S')} - 💡 Revealed song")
             st.rerun()
 
     # Second row of power-ups (2 buttons)
@@ -1161,34 +1040,52 @@ with left:
             st.session_state.revealed["movie"] = True
             push_message("info", f"📜 Movie Revealed: **{movie}** (No points, streak reset)")
 
-            if cp and cp in st.session_state.players:
+            if cp:
                 p = st.session_state.players[cp]
                 p["streak"] = 0
                 p["streak_has_hint"] = False
                 p["streak_has_wrong"] = False
+                p["history"].append(f"{time.strftime('%H:%M:%S')} - ⏭️ Skipped movie: {movie}")
 
             st.session_state.hints_used_current_movie = True
             st.session_state.auto_advance = True
-            st.session_state.advance_time = time.time() + 3
-            st.rerun()
+            st.session_state.advance_time = time.time() + 5
 
     with col5:
         if st.button("📦\n**Reveal All**\n(Auto Next)", use_container_width=True, key="reveal_all", help="Show everything and move to next"):
             st.session_state.revealed = {"movie": True, "actor": True, "actress": True, "song": True}
             st.session_state.hints_used_current_movie = True
             push_message("info", f"🎬 **Movie:** {movie}")
-            push_message("info", f"🕺 **Actor:** {actor}")  
+            push_message("info", f"🕺 **Actor:** {actor}")
             push_message("info", f"💃 **Actress:** {actress}")
             push_message("info", f"🎵 **Song:** {song}")
+            push_message("info", "⏩ Moving to next movie in **5 seconds**...")
 
-            if cp and cp in st.session_state.players:
+            if cp:
                 st.session_state.players[cp]["streak_has_hint"] = True
+                st.session_state.players[cp]["history"].append(f"{time.strftime('%H:%M:%S')} - 📦 Revealed all")
 
             st.session_state.auto_advance = True
             st.session_state.advance_time = time.time() + 5
+
+    # Enhanced Auto-advance handling
+    if st.session_state.get("auto_advance", False):
+        remaining = int(st.session_state.advance_time - time.time())
+        if remaining > 0:
+            st.markdown(f"""
+            <div class="game-card" style="text-align: center;">
+                <h3>⏳ Next cinema challenge in <span style="color: #ffd700; font-size: 1.8rem; text-shadow: 0 0 15px rgba(255,215,0,0.6);">{remaining}</span> seconds...</h3>
+                <div class="streak-indicator"></div>
+            </div>
+            """, unsafe_allow_html=True)
+            if HAS_AUTOREFRESH:
+                st_autorefresh(interval=1000, key="auto_refresh")
+        else:
+            st.session_state.auto_advance = False
+            pick_new_movie()
             st.rerun()
 
-    # Show revealed information in a consolidated section
+    # Show revealed information
     if any(st.session_state.revealed.values()):
         st.markdown("### 🔓 **Revealed Information**")
         revealed_info = []
@@ -1264,6 +1161,7 @@ with right:
         # Enhanced player history display
         for pname, pdata in st.session_state.players.items():
             is_current = pname == st.session_state.current_player
+            player_class = "current-player" if is_current else "player-card"
             
             with st.expander(f"{'🎭' if is_current else '🎪'} **{pname}** — 🏆 {pdata['score']} | 🔥 {pdata['streak']}", expanded=is_current):
                 # Enhanced player stats summary
@@ -1293,11 +1191,10 @@ with right:
                 </div>
                 """, unsafe_allow_html=True)
                 
-                # Recent movies guessed
-                recent_movies = pdata.get("history", [])[-6:]  # Show last 6 movies
-                if not recent_movies:
+                # Recent activity
+                hist = pdata.get("history", [])[-8:]  # Show last 8 events
+                if not hist:
                     st.markdown("""
-                    
                     <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 10px; margin: 1rem 0;">
                         <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌟</div>
                         <p style="opacity: 0.8;"><em>Ready to make cinema history...</em></p>
